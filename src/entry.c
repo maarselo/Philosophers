@@ -17,7 +17,7 @@ static int	ft_check_is_digit(char c)
 	return (48 <= c && c <= 57);
 }
 
-static int	ft_atoi(char *str)
+int	ft_atoi(char *str)
 {
 	int	i;
 	int	sign;
@@ -39,14 +39,14 @@ static int	ft_atoi(char *str)
 	return (total * sign);
 }
 
-static int	ft_check_number(char **argv)
+static int	ft_check_numbers(char **argv)
 {
 	int i;
 
-	i = 0;
+	i = 1;
 	while (argv[i])
 	{
-		if (ft_atoi(argv[i]) == 0)
+		if (ft_atoi(argv[i]) <= 0)
 			return (1);
 		i++;
 	}
@@ -59,7 +59,7 @@ int	ft_check_entry(char **argv)
 	int	j;
 
 	i = 1;
-	if (ft_check_number(argv))
+	if (ft_check_numbers(argv))
 		return (1);
 	while (argv[i])
 	{
