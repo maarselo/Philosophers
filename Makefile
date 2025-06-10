@@ -10,15 +10,14 @@ INCLUDE_DIR = include
 
 HEADER = $(INCLUDE_DIR)/philosophers.h
 
-SRC_FILES = main.c 
+SRC_FILES = main.c entry.c
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 CC = cc -g
-CFLAGS = -Wall -Werror -Wextra -I$(INCLUDE_DIR)
+CFLAGS = -Wall -Werror -Wextra -pthread -I$(INCLUDE_DIR) 
 RM = rm -rf
 
-# Colores mejorados
 GREEN = \033[1;32m
 BLUE = \033[1;34m
 YELLOW = \033[1;33m
@@ -32,7 +31,7 @@ $(NAME): $(OBJS) $(HEADER) Makefile
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)✓ Compilación completada!$(RESET)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR) #dependecia de orden 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(YELLOW)▶ Compilando $(RESET) $<..."
 	@$(CC) $(CFLAGS) -c $< -o $@
 
