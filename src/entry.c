@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
-
 static int	ft_check_is_digit(char c)
 {
 	return (48 <= c && c <= 57);
@@ -32,7 +30,7 @@ int	ft_atoi(char *str)
 	{
 		if (str[i] == '-')
 			sign *= -1;
-		i++; 
+		i++;
 	}
 	while (ft_check_is_digit(str[i]))
 		total = total * 10 + (str[i++] - '0');
@@ -41,7 +39,7 @@ int	ft_atoi(char *str)
 
 static int	ft_check_numbers(char **argv)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (argv[i])
@@ -64,11 +62,11 @@ int	ft_check_entry(char **argv)
 	while (argv[i])
 	{
 		j = 0;
-		while (argv[i][j] && argv[i][j] == ' ')	
+		while (argv[i][j] && argv[i][j] == ' ')
 			j++;
 		while (argv[i][j] && ft_check_is_digit(argv[i][j]))
 			j++;
-		while (argv[i][j] && argv[i][j] == ' ')	
+		while (argv[i][j] && argv[i][j] == ' ')
 			j++;
 		if (argv[i][j] != '\0')
 			return (1);
@@ -76,4 +74,3 @@ int	ft_check_entry(char **argv)
 	}
 	return (0);
 }
-
