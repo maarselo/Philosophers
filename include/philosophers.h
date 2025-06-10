@@ -26,7 +26,6 @@ typedef struct s_philo
 	int				id;
 	int				state;
 	int				total_eats;
-	uint64_t		init_time;
 	pthread_t		pthread;
 	pthread_mutex_t	fork_lock;
 }				t_philo;
@@ -43,6 +42,11 @@ typedef struct s_data
 	t_philo			*philo;
 }				t_data;
 
+//Chekck entry and utils
+int		ft_atouint64(char *str);
 int		ft_check_entry(char **argv);
+
+//Init the struct for philo and data
+t_data	*ft_init_argv(int argc, char **argv);
 
 #endif
