@@ -34,17 +34,17 @@ typedef struct s_data
 {
 	int				num_philos;
 	int				must_eats;
-	uint64_t		start_time;
-	uint64_t		time_to_die;
-	uint64_t		time_to_eat;
-	uint64_t		time_to_sleep;
+	int64_t		start_time;
+	int64_t		time_to_die;
+	int64_t		time_to_eat;
+	int64_t		time_to_sleep;
 	pthread_mutex_t	write_lock;
 	t_philo			*philo;
 }				t_data;
 
 //Chekck entry and utils
-int		ft_atouint64(char *str);
-int		ft_check_entry(char **argv);
+int64_t		ft_atoint64(char *str);
+int			ft_check_entry(int argc, char **argv);
 
 //Init the struct for philo and data
 t_data	*ft_init_argv(int argc, char **argv);
