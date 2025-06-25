@@ -12,65 +12,67 @@
 
 #include "philosophers.h"
 
+static int	ft_isspace(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}
+
 static int	ft_check_is_digit(char c)
 {
 	return (48 <= c && c <= 57);
 }
 
-uint64_t	ft_atoi(char *str)
+static int	ft_isascii(int c)
+{
+	return (c >= 0 && c <= 127);
+}
+
+int64_t	ft_atoint64(char *str)
 {
 	int			i;
-	uint64_t	total;
+	int64_t	total;
 
 	i = 0;
 	total = 0;
+	if (str[i] == '\0')
+		return (-1); 
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			return (0);
+			return (-1);
 		i++;
 	}
-	while (ft_check_is_digit(str[i]))
+	while (str[i] && ft_check_is_digit(str[i]))
 		total = total * 10 + (str[i++] - '0');
+	while (str[i])
+	{
+		if (!ft_isspace(str[i]))
+		{
+			if (ft_isascii(str[i]))
+				return (-1);
+		}
+		i++;
+	}
 	return (total);
 }
 
-static int	ft_check_numbers(char **argv)
+int	ft_check_entry(int argc, char **argv)
 {
 	int	i;
 
 	i = 1;
 	while (argv[i])
 	{
-		if (ft_atouint64(argv[i]) <= 0)
+		if (ft_atoint64(argv[i]) < 0)
 			return (1);
 		i++;
 	}
-	return (0);
-}
-
-int	ft_check_entry(char **argv)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	if (ft_check_numbers(argv))
+	if (!ft_atoint64(argv[1]))
+		return (1);	
+	//Nose si debo viligar los otros y hacer exit o igual seguir
+	if (argc == 6 && !ft_atoint64(argv[argc - 1]))
 		return (1);
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j] && argv[i][j] == ' ')
-			j++;
-		while (argv[i][j] && ft_check_is_digit(argv[i][j]))
-			j++;
-		while (argv[i][j] && argv[i][j] == ' ')
-			j++;
-		if (argv[i][j] != '\0')
-			return (1);
-		i++;
-	}
 	return (0);
 }
