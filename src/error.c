@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvillavi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/13 19:59:51 by mvillavi          #+#    #+#             */
-/*   Updated: 2025/11/13 19:59:54 by mvillavi         ###   ########.fr       */
+/*   Created: 2025/11/13 22:31:43 by mvillavi          #+#    #+#             */
+/*   Updated: 2025/11/13 22:31:44 by mvillavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char **argv)
+void	ft_error_handler(int error)
 {
-	ft_valid_arguments(argc, argv);
+	if (error == ARGUMENTS_NUMBER)
+		printf("Invalid number of arguments.\n");
+	else if (error == ARGS_NOT_NUMERIC)
+		printf("Args can only be a digits.\n");
+	else if (error == NEGATIVE_NUMBERS)
+		printf("The args must be apositive numbers.\n");
+	exit(1);
 }
+
