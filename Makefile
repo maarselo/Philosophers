@@ -13,21 +13,64 @@
 NAME=philo
 
 SRC_DIR=src
-#BONUS_DIR=bonus
 OBJ_DIR=obj
-INCLUDE=include
+INCLUDE_DIR=include
 
-HEADER=$(INCLUDE)/philosophers.h
-#HEADER_BONUS=$(INCLUDE)/philosophers_bonus.h
+HEADER=$(INCLUDE_DIR)/philosophers.h
 
-SRCS_FILES=main.c
-#BONUS_FILES=
+SRCS_FILES = main.c
 
-SRC=$(addprefix$(SRC_DIR) /, $(SRCS_FILES))
-#SRC_BONUS=(addprefix$(BONUS_DIR) /, $(BONUS_FILES))
+SRC=$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
+OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
 
-OBJS=(addprefix$(OBJ_DIR) /, $(SRCS_FILES:.c=.o))
-BOBJS=(addprefix$(OBJ_DIR) /, $(SRCS_BONUS:.c=.o))
+CC = cc
+CFLAGS = -Wall -Werror -Wextra -I$(INCLUDE_DIR) 
+DEBUG_FLAGS = -g -fsanitize=address,leak
 
-CC = cc -g
-CFLAGS=-Wall -Werror -Wextra
+MKDIR = mkdir -p
+RM = rm -rf
+
+YELLOW=\033[1;33m
+RED=\033[1;31m
+GREEN=\033[1;32m
+BLUE=\033[1;34m
+RESET=\033[0m
+BULLET = $(BLUE)•$(RESET)
+BULLET_RED = $(RED)•$(RESET)
+
+all: $(NAME)
+
+$(NAME): $(OBJS) $(HEADER) Makefile
+	@$(CC) $(OBJS)  -o $(NAME)
+	@echo "$(GREEN)Compilation completed!$(RESET)"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(YELLOW)▶ Compiling $(RESET) $<..."
+
+$(OBJ_DIR):
+	@$(MKDIR) $(OBJ_DIR)
+	@echo "$(BULLET) $(BLUE)Created:$(RESET) $@/"
+
+clean :
+	@$(RM) $(OBJ_DIR)
+	@echo "$(BULLET_RED) $(RED)Cleaning:$(RESET) object files"
+
+fclean : clean
+	@$(RM) $(NAME)
+	@echo "$(BULLET_RED) $(RED)Removing:$(RESET) $(NAME)"
+
+re : fclean all
+
+run: $(NAME)
+	@./$(NAME)
+
+run-debug: CC+= $(DEBUG_FLAGS)
+run-debug: re
+	@echo "$(GREEN)▶ Running $(NAME) with sanitizers...$(RESET)"
+	./$(NAME)
+
+valgrind: $(NAME)
+	@valgrind --leak-check=full ./$(NAME)
+
+.PHONY: all clean fclean re run run-debug valgrind
