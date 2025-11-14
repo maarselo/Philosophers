@@ -14,5 +14,12 @@
 
 int	main(int argc, char **argv)
 {
-	ft_valid_arguments(argc, argv);
+	t_data	*data;
+
+	if (ft_valid_arguments(argc, argv))
+		return (1);
+	data = ft_init_data(argc, argv);
+	if (!data)
+		return (ft_error_handler(CREATING_VARIABLES));
+	//ft_init_philos()
 }
