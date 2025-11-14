@@ -33,7 +33,7 @@ static int	ft_check_is_numeric(int argc, char **argv)
 		j = 0;
 		while (argv[i][j] && ft_isspace(argv[i][j]))
 			j++;
-		while (argv[i][j] &&  (argv[i][j] == '+' || argv[i][j] == '-'))
+		while (argv[i][j] && (argv[i][j] == '+' || argv[i][j] == '-'))
 			j++;
 		while (argv[i][j])
 		{
@@ -57,7 +57,7 @@ static int	ft_check_positive_numbers(int argc, char **argv)
 	return (0);
 }
 
-void	ft_valid_arguments(int argc, char **argv)
+int	ft_valid_arguments(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
 		ft_error_handler(ARGUMENTS_NUMBER);
@@ -65,4 +65,5 @@ void	ft_valid_arguments(int argc, char **argv)
 		ft_error_handler(ARGS_NOT_NUMERIC);
 	else if (ft_check_positive_numbers(argc, argv))
 		ft_error_handler(NEGATIVE_NUMBERS);
-}		
+	return (0);
+}
