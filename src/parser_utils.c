@@ -26,12 +26,15 @@ long	ft_atol(char *str)
 	while (str[index] && (str[index] == '-' || str[index] == '+'))
 	{
 		if (str[index] == '-')
-			sign = -sign;
+			sign = -1;
+		else if (str[index] == '+')
+			sign = 1;
 		index++;
 	}
 	if (!ft_isdigit(str[index]))
-        return (0);
+		return (0);
 	while (ft_isdigit(str[index]))
 		number = number * 10 + str[index++] - '0';
 	return (number * sign);
 }
+
