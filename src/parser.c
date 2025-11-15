@@ -11,6 +11,41 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
+/*
+void	ft_printf_data(t_data *data)
+{
+    int	i;
+
+    if (!data)
+    {
+        printf("Data is NULL.\n");
+        return;
+    }
+
+    // Imprimir información general de la estructura t_data
+    printf("Total Philosophers: %d\n", data->total_philos);
+    printf("Time to Die: %ld\n", data->time_to_die);
+    printf("Time to Eat: %ld\n", data->time_to_eat);
+    printf("Time to Sleep: %ld\n", data->time_to_sleep);
+    printf("Must Meals: %d\n", data->must_meals);
+    printf("Stop Routines: %s\n", data->stop_routines ? "true" : "false");
+
+    // Imprimir información de cada filósofo
+    if (!data->philos)
+    {
+        printf("Philosophers array is NULL.\n");
+        return;
+    }
+
+    for (i = 0; i < data->total_philos; i++)
+    {
+        printf("\nPhilosopher %d:\n", data->philos[i].philo_number);
+        printf("  Total Meals: %d\n", data->philos[i].total_meals);
+        printf("  Last Meal: %lu\n", data->philos[i].last_meal);
+        printf("  Left Philosopher: %p\n", (void *)data->philos[i].left_philo);
+        printf("  Right Philosopher: %p\n", (void *)data->philos[i].right_philo);
+    }
+}*/
 
 t_data	*ft_init_data(int argc, char **argv)
 {
@@ -28,8 +63,26 @@ t_data	*ft_init_data(int argc, char **argv)
 		data->must_meals = ft_atol(argv[5]);
 	else
 		data->must_meals = 0;
-	if (pthread_mutex_init(&write_mutex, NULL) != 0);
-		return (ft_free_data(data), NULL);
+	if (pthread_mutex_init(&write_mutex, NULL) != 0)
+		return (free(data), NULL);
 	data->write_mutex = write_mutex;
+	data->stop_routines = false;
 	return (data);
 }
+/*
+int	ft_init_philos_routine(t_data *data)
+{
+	int	i;
+	t_philo	*top_philo;
+	t_philo	*tmp_philo;
+
+	i = 0;
+	top_philo = NULL;
+	while (i < data->total_philos)
+	{
+		tmp_philo = (t_philo *)malloc(sizeof(t_philo));
+		if 
+	}
+
+	
+}*/

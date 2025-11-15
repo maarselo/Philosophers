@@ -15,6 +15,13 @@
 void	ft_free_data(t_data *data)
 {
 	if (data)
+	{
+		pthread_mutex_destroy(&data->write_mutex);
 		free(data);
+	}
+}
+
+void	ft_free_specified_philos(int philos_numbers, t_data *data)
+{
 
 }

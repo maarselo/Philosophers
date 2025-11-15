@@ -9,6 +9,7 @@
 /*   Updated: 2025/11/13 19:59:54 by mvillavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+# include <unistd.h>
 
 #include "philosophers.h"
 
@@ -21,5 +22,7 @@ int	main(int argc, char **argv)
 	data = ft_init_data(argc, argv);
 	if (!data)
 		return (ft_error_handler(CREATING_VARIABLES));
-	//ft_init_philos()
+	ft_printf_data(data);
+	//ft_init_philos(data)
+	//	return (ft_error_handler(CREATING_VARIABLES), ft_free_data(data), 1);
 }

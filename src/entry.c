@@ -60,10 +60,10 @@ static int	ft_check_positive_numbers(int argc, char **argv)
 int	ft_valid_arguments(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
-		ft_error_handler(ARGUMENTS_NUMBER);
+		return (ft_error_handler(ARGUMENTS_NUMBER));
 	else if (ft_check_is_numeric(argc, argv))
-		ft_error_handler(ARGS_NOT_NUMERIC);
+		return (ft_error_handler(ARGS_NOT_NUMERIC));
 	else if (ft_check_positive_numbers(argc, argv))
-		ft_error_handler(NEGATIVE_NUMBERS);
+		return (ft_error_handler(NEGATIVE_NUMBERS));
 	return (0);
 }

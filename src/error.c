@@ -21,6 +21,6 @@ int	ft_error_handler(int error)
 	else if (error == NEGATIVE_NUMBERS)
 		return (printf("The args must be apositive numbers.\n"), 1);
 	else if (error == CREATING_VARIABLES)
-		return (printf("Error while creating variables.\n"))
+		return (printf("Error while creating variables.\n"), 1);
 	return (0);
 }
