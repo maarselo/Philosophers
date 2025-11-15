@@ -33,8 +33,8 @@ typedef struct s_philo
 	int				philo_number;
 	pthread_t		pthread;
 	pthread_mutex_t	fork;
-	struct s_philo	*left_philo;
-	struct s_philo	*right_philo;
+	struct s_philo	*left_philo;//prev
+	struct s_philo	*right_philo;//next
 	int				total_meals;
 	unsigned long	last_meal;
 	t_data			*data;
@@ -61,7 +61,9 @@ int				ft_valid_arguments(int argc, char **argv);
 long			ft_atol(char *str);
 //parser.c
 t_data			*ft_init_data(int argc, char **argv);
+int				ft_init_philos_data(t_data *data);
 //free.c
+void			ft_free_philos_list(t_philo *philo_list);
 void			ft_free_data(t_data *data);
 
 //error.c

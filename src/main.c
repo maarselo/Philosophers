@@ -9,9 +9,11 @@
 /*   Updated: 2025/11/13 19:59:54 by mvillavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-# include <unistd.h>
 
 #include "philosophers.h"
+
+
+//monitorizar 
 
 int	main(int argc, char **argv)
 {
@@ -20,9 +22,6 @@ int	main(int argc, char **argv)
 	if (ft_valid_arguments(argc, argv))
 		return (1);
 	data = ft_init_data(argc, argv);
-	if (!data)
+	if (!data || ft_init_philos_data(data))
 		return (ft_error_handler(CREATING_VARIABLES));
-	ft_printf_data(data);
-	//ft_init_philos(data)
-	//	return (ft_error_handler(CREATING_VARIABLES), ft_free_data(data), 1);
 }

@@ -63,14 +63,15 @@ t_data	*ft_init_data(int argc, char **argv)
 		data->must_meals = ft_atol(argv[5]);
 	else
 		data->must_meals = 0;
+	data->philos = NULL;
 	if (pthread_mutex_init(&write_mutex, NULL) != 0)
 		return (free(data), NULL);
 	data->write_mutex = write_mutex;
 	data->stop_routines = false;
 	return (data);
 }
-/*
-int	ft_init_philos_routine(t_data *data)
+
+int	ft_init_philos_data(t_data *data)
 {
 	int	i;
 	t_philo	*top_philo;
@@ -81,8 +82,10 @@ int	ft_init_philos_routine(t_data *data)
 	while (i < data->total_philos)
 	{
 		tmp_philo = (t_philo *)malloc(sizeof(t_philo));
-		if 
+		if (!tmp_philo)
+			return (ft_free_philos_list(top_philo), ft_free_data(data), 1)
+		//poenr a filos la hora actual para pode rhacer comparacin,y no manejar mas errros hasta crear hilos unico malloc
 	}
 
-	
-}*/
+	return (0);
+}
