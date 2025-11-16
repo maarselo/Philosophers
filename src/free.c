@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
-//tengo que pasarlo algo de algunamanera que si stopde data que salga 
-//errores tanto para que acabe
 
 void	ft_free_philos_list(t_philo *philo_list)
 {
@@ -36,6 +34,7 @@ void	ft_free_philos_list(t_philo *philo_list)
 
 void	ft_free_data(t_data *data)
 {
+	data->stop_routines = true;
 	if (data)
 	{
 		pthread_mutex_destroy(&data->write_mutex);
@@ -43,11 +42,4 @@ void	ft_free_data(t_data *data)
 			ft_free_philos_list(data->philos);
 		free(data);
 	}
-}
-
-
-
-void	ft_free_specified_philos(int philos_numbers, t_data *data)
-{
-
 }
