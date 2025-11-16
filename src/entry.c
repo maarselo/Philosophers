@@ -12,16 +12,6 @@
 
 #include "philosophers.h"
 
-int	ft_isdigit(char c)
-{
-	return ('0' <= c && c <= '9');
-}
-
-int	ft_isspace(char c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
-
 static int	ft_check_is_numeric(int argc, char **argv)
 {
 	int	i;
