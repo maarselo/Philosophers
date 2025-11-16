@@ -15,8 +15,9 @@
 
 # include <stdbool.h>
 # include <stdio.h>
-# include <pthread.h>
 # include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
 
 typedef enum e_erro
 {
@@ -42,23 +43,30 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int				total_philos;//
-	long			time_to_die;//
-	long			time_to_eat;//
-	long			time_to_sleep;//
-	int				must_meals;//
+	int				total_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				must_meals;
 	t_philo			*philos;
-	pthread_mutex_t	write_mutex;//
+	pthread_mutex_t	write_mutex;
 	bool			stop_routines;
 }	t_data;
 
-//entry.c
+//utils.c
 int				ft_isspace(char c);
 int				ft_isdigit(char c);
+long			ft_atol(char *str);
+
+//entry.c
 int				ft_valid_arguments(int argc, char **argv);
 
 //parser_utils.c
-long			ft_atol(char *str);
+void			ft_append_philo(t_philo *philo_created, t_philo *philo_list);
+void			ft_link_previous_philo(t_philo *philo_created,
+					t_philo *philo_list);
+void			ft_linked_first_with_last_philo(t_philo *top_philo);
+unsigned long	ft_get_time(void);
 //parser.c
 t_data			*ft_init_data(int argc, char **argv);
 int				ft_init_philos_data(t_data *data);
