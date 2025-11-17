@@ -47,3 +47,14 @@ long	ft_atol(char *str)
 		number = number * 10 + str[index++] - '0';
 	return (number * sign);
 }
+
+unsigned long	ft_get_time(void)
+{
+	struct timeval	time_struct;
+	unsigned long	total_milisec;
+
+	total_milisec = 0;
+	gettimeofday(&time_struct, NULL);
+	total_milisec = (time_struct.tv_sec * 1000) + (time_struct.tv_usec / 1000);
+	return (total_milisec);
+}
