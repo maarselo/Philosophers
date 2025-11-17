@@ -18,14 +18,14 @@ INCLUDE_DIR=include
 
 HEADER=$(INCLUDE_DIR)/philosophers.h
 
-SRCS_FILES = main.c entry.c parser.c parser_utils.c utils.c free.c error.c
+SRCS_FILES = main.c entry.c parser.c parser_utils.c routine.c monitor.c message.c utils.c free.c error.c
 
 SRC=$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -I$(INCLUDE_DIR) 
-DEBUG_FLAGS = -g -fsanitize=address,leak
+DEBUG_FLAGS = -g -fsanitize=thread
 
 MKDIR = mkdir -p
 RM = rm -rf
@@ -65,10 +65,9 @@ re : fclean all
 run: $(NAME)
 	@./$(NAME)
 
-run-debug: CC+= $(DEBUG_FLAGS)
-run-debug: re
+debug: CC+= $(DEBUG_FLAGS)
+debug: re
 	@echo "$(GREEN)▶ Running $(NAME) with sanitizers...$(RESET)"
-	./$(NAME)
 
 valgrind: $(NAME)
 	@valgrind --leak-check=full ./$(NAME)

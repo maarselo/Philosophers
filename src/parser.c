@@ -55,7 +55,6 @@ void	ft_printf_data(t_data *data)
 t_data	*ft_init_data(int argc, char **argv)
 {
 	t_data			*data;
-	pthread_mutex_t	write_mutex;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
@@ -69,14 +68,16 @@ t_data	*ft_init_data(int argc, char **argv)
 	else
 		data->must_meals = 0;
 	data->philos = NULL;
-	if (pthread_mutex_init(&write_mutex, NULL) != 0)
+	if (pthread_mutex_init(&data->write_mutex, NULL) != 0)
 		return (free(data), NULL);
-	data->write_mutex = write_mutex;
+	if (pthread_mutex_init(&data->stop_routine_mutex, NULL) != 0)
+		return (pthread_mutex_destroy(&data->write_mutex), free(data), NULL);
 	data->stop_routines = false;
+	data->start_time = ft_get_time();
 	return (data);
 }
 
-static t_philo	*ft_init_philo(int i, t_data *data)
+static t_philo	*ft_init_philo(long i, t_data *data)
 {
 	t_philo	*philo_created;
 
@@ -88,14 +89,18 @@ static t_philo	*ft_init_philo(int i, t_data *data)
 		return (free(philo_created), NULL);
 	philo_created->left_philo = NULL;
 	philo_created->right_philo = NULL;
-	philo_created->total_meals = 0;
+	if (data->must_meals)
+		philo_created->meals = 0;
+	else
+		philo_created->meals = -1;
+	philo_created->is_eating = false;
 	philo_created->data = data;
 	return (philo_created);
 }
 
 int	ft_init_philos_data(t_data *data)
 {
-	int				i;
+	long			i;
 	t_philo			*top_philo;
 	t_philo			*philo_created;
 
@@ -116,5 +121,24 @@ int	ft_init_philos_data(t_data *data)
 	}
 	ft_linked_first_with_last_philo(top_philo);
 	data->philos = top_philo;
+	return (0);
+}
+
+int	ft_init_philos_routine(t_data *data)
+{
+	long	i;
+
+	i = 0;
+	t_philo	*philo_tmp;
+	philo_tmp = data->philos;
+	while (i < data->total_philos)
+	{
+		philo_tmp->limit_time = ft_get_time() + philo_tmp->data->time_to_die;
+		if (pthread_create(&philo_tmp->thread, NULL, ft_routine, philo_tmp) != 0)
+			return (ft_free_data(data), 1);
+		philo_tmp = philo_tmp->right_philo;
+		i++;
+		usleep(100);
+	}
 	return (0);
 }
