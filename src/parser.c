@@ -51,7 +51,7 @@ void	ft_printf_data(t_data *data)
         current = current->right_philo;
         i++;
     } while (current != data->philos && i < data->total_philos);
-}
+}*/
 
 t_data	*ft_init_data(int argc, char **argv)
 {
@@ -76,7 +76,7 @@ t_data	*ft_init_data(int argc, char **argv)
 	data->stop_routines = false;
 	data->start_time = ft_get_time();
 	return (data);
-}*/
+}
 
 static t_philo	*ft_init_philo(long i, t_data *data)
 {
