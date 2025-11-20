@@ -23,11 +23,12 @@ void	ft_printf_data(t_data *data)
         return;
     }
 	printf("Data Addres: %p\n", data);
-    printf("Total Philosophers: %d\n", data->total_philos);
+    printf("Total Philosophers: %ld\n", data->total_philos);
     printf("Time to Die: %ld\n", data->time_to_die);
     printf("Time to Eat: %ld\n", data->time_to_eat);
     printf("Time to Sleep: %ld\n", data->time_to_sleep);
     printf("Must Meals: %d\n", data->must_meals);
+	printf("Start time: %ld\n", data->start_time);
     printf("Stop Routines: %s\n", data->stop_routines ? "true" : "false");
 
     if (!data->philos)
@@ -40,17 +41,17 @@ void	ft_printf_data(t_data *data)
     i = 0;
     do
     {
-		printf("\nPhilosopher %d:\n", current->philo_number);
+		printf("\nPhilosopher %ld:\n", current->philo_number);
 		printf("  Philo addres: %p\n", (void *)current);
-        printf("  Total Meals: %d\n", current->total_meals);
-        printf("  Last Meal: %lu\n", current->last_meal);
+        printf("  Total Meals: %d\n", current->meals);
         printf("  Left Philosopher: %p\n", (void *)current->left_philo);
         printf("  Right Philosopher: %p\n", (void *)current->right_philo);
-		printf(" Data address: %p\n", (void *)current->data);
+		printf("  Data address: %p\n", (void *)current->data);
+		printf("  Limit time: %ld\n", current->limit_time);
         current = current->right_philo;
         i++;
     } while (current != data->philos && i < data->total_philos);
-}*/
+}
 
 t_data	*ft_init_data(int argc, char **argv)
 {
@@ -75,7 +76,7 @@ t_data	*ft_init_data(int argc, char **argv)
 	data->stop_routines = false;
 	data->start_time = ft_get_time();
 	return (data);
-}
+}*/
 
 static t_philo	*ft_init_philo(long i, t_data *data)
 {
@@ -138,7 +139,7 @@ int	ft_init_philos_routine(t_data *data)
 			return (ft_free_data(data), 1);
 		philo_tmp = philo_tmp->right_philo;
 		i++;
-		usleep(100);
+		//usleep(100);
 	}
 	return (0);
 }
