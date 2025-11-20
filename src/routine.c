@@ -54,7 +54,7 @@ static void	ft_eat(t_philo *philo)
 	ft_leave_forks(philo);
 }
 
-void static	ft_sleep(t_philo *philo)
+static void	ft_sleep(t_philo *philo)
 {
 	if (!ft_check_whether_continue(philo))
 		return ;
