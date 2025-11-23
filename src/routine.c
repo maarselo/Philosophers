@@ -35,7 +35,9 @@ static void	ft_take_forks(t_philo *philo)
 
 static void	ft_leave_forks(t_philo *philo)
 {
+	ft_display_message(DROP_FORK, philo);
 	pthread_mutex_unlock(&philo->left_philo->fork);
+	ft_display_message(DROP_FORK, philo);
 	pthread_mutex_unlock(&philo->fork);
 }
 
@@ -46,7 +48,7 @@ static void	ft_eat(t_philo *philo)
 	ft_take_forks(philo);
 	philo->is_eating = true;
 	ft_display_message(EATING, philo);
-	usleep(philo->data->time_to_die * 1000);
+	usleep(philo->data->time_to_eat * 1000);
 	philo->limit_time = ft_get_time() + philo->data->time_to_die;
 	philo->is_eating = false;
 	if (philo->data->must_meals)

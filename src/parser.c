@@ -139,7 +139,7 @@ int	ft_init_philos_routine(t_data *data)
 			return (ft_free_data(data), 1);
 		philo_tmp = philo_tmp->right_philo;
 		i++;
-		//usleep(100);
+		usleep(100);
 	}
 	return (0);
 }

@@ -35,7 +35,7 @@ static int	ft_check_anyone_is_die(t_data *data)
 	philo = data->philos;
 	while (++i < data->total_philos)
 	{
-		if (data->philos[i].limit_time < ft_get_time())
+		if (!data->philos[i].is_eating && data->philos[i].limit_time < ft_get_time())
 		{
 			ft_display_message(DIE, philo);
 			return (1);
@@ -67,6 +67,5 @@ void	ft_monitor(t_data *data)
 			pthread_mutex_unlock(&data->stop_routine_mutex);
 			return ;
 		}
-		//usleep(100);
 	}
 }

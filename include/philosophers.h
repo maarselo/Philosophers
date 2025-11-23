@@ -32,6 +32,7 @@ typedef enum e_error
 typedef enum e_state
 {
 	TAKEN_FORK,
+	DROP_FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
