@@ -18,6 +18,12 @@ static int	ft_take_forks(t_philo *philo)
 	if (!ft_should_continue(philo))
 		return (ft_unlock_fork(philo), 1);
 	ft_display_message(TAKEN_FORK, philo);
+	if (philo->data->total_philos == 1)
+	{
+		usleep(philo->data->time_to_die * 1000);
+		pthread_mutex_unlock(&philo->fork);
+		return (1);
+	}
 	pthread_mutex_lock(&philo->left_philo->fork);
 	if (!ft_should_continue(philo))
 		return (ft_unlock_both_forks(philo), 1);
@@ -27,9 +33,7 @@ static int	ft_take_forks(t_philo *philo)
 
 static void	ft_leave_forks(t_philo *philo)
 {
-	ft_display_message(DROP_FORK, philo);
 	pthread_mutex_unlock(&philo->fork);
-	ft_display_message(DROP_FORK, philo);
 	pthread_mutex_unlock(&philo->left_philo->fork);
 }
 
@@ -37,19 +41,23 @@ static void	ft_eat(t_philo *philo)
 {
 	if (!ft_should_continue(philo) || ft_take_forks(philo))
 		return ;
+	pthread_mutex_lock(&philo->philo_state_mutex);
 	philo->is_eating = true;
-	ft_display_message(EATING, philo);
 	philo->limit_time = ft_get_time() + philo->data->time_to_die;
+	pthread_mutex_unlock(&philo->philo_state_mutex);
+	ft_display_message(EATING, philo);
 	usleep(philo->data->time_to_eat * 1000);
+	pthread_mutex_lock(&philo->philo_state_mutex);
 	philo->is_eating = false;
 	if (philo->data->must_meals)
 		philo->meals++;
+	pthread_mutex_unlock(&philo->philo_state_mutex);
 	ft_leave_forks(philo);
 }
 
 static void	ft_sleep(t_philo *philo)
 {
-	if (!ft_should_continue(philo))
+	if (!ft_should_continue(philo) || ft_check_only_one(philo))
 		return ;
 	ft_display_message(SLEEPING, philo);
 	usleep(philo->data->time_to_sleep * 1000);
@@ -64,7 +72,7 @@ void	*ft_routine(void *philo_arg)
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
-		if (ft_should_continue(philo))
+		if (!ft_check_only_one(philo) && ft_should_continue(philo))
 			ft_display_message(THINKING, philo);
 	}
 	return (NULL);

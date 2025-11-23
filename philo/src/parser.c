@@ -47,13 +47,16 @@ static t_philo	*ft_init_philo(long i, t_data *data)
 	philo_created->philo_number = i;
 	if (pthread_mutex_init(&philo_created->fork, NULL) != 0)
 		return (free(philo_created), NULL);
-	philo_created->left_philo = NULL;
-	philo_created->right_philo = NULL;
 	if (data->must_meals)
 		philo_created->meals = 0;
 	else
 		philo_created->meals = -1;
 	philo_created->is_eating = false;
+	if (pthread_mutex_init(&philo_created->philo_state_mutex, NULL) != 0)
+		return (pthread_mutex_destroy(&philo_created->fork),
+			free(philo_created), NULL);
+	philo_created->left_philo = NULL;
+	philo_created->right_philo = NULL;
 	philo_created->data = data;
 	return (philo_created);
 }

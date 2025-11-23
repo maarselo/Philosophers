@@ -15,14 +15,18 @@
 static int	ft_check_philos_must_foods(t_data *data)
 {
 	long	i;
+	t_philo	*philo;
 
 	i = -1;
+	philo = data->philos;
 	while (++i < data->total_philos)
 	{
-		if (data->philos[i].meals < data->must_meals)
-			return (0);
+		pthread_mutex_lock(&philo->philo_state_mutex);
+		if (philo->meals < data->must_meals)
+			return (pthread_mutex_unlock(&philo->philo_state_mutex), 0);
+		pthread_mutex_unlock(&philo->philo_state_mutex);
+		philo = philo->right_philo;
 	}
-	printf("All philosophers reached the must meals.\n");
 	return (1);
 }
 
@@ -35,11 +39,13 @@ static int	ft_check_anyone_is_die(t_data *data)
 	philo = data->philos;
 	while (++i < data->total_philos)
 	{
+		pthread_mutex_lock(&philo->philo_state_mutex);
 		if (!philo->is_eating && philo->limit_time < ft_get_time())
 		{
 			ft_display_message(DIE, philo);
-			return (1);
+			return (pthread_mutex_unlock(&philo->philo_state_mutex), 1);
 		}
+		pthread_mutex_unlock(&philo->philo_state_mutex);
 		philo = philo->right_philo;
 	}
 	return (0);
@@ -56,6 +62,7 @@ void	ft_monitor(t_data *data)
 				pthread_mutex_lock(&data->stop_routine_mutex);
 				data->stop_routines = true;
 				pthread_mutex_unlock(&data->stop_routine_mutex);
+				printf("All philosophers reached the must meals.\n");
 				return ;
 			}
 		}

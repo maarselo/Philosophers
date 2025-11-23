@@ -26,6 +26,13 @@ int	ft_should_continue(t_philo *philo)
 	return (1);
 }
 
+int	ft_check_only_one(t_philo *philo)
+{
+	if (philo->data->total_philos == 1)
+		return (1);
+	return (0);
+}
+
 void	ft_unlock_fork(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->fork);

@@ -18,9 +18,6 @@ void	ft_display_message(int message, t_philo *philo)
 	if (message == TAKEN_FORK)
 		printf("%lu\t%ld has taken a fork\n",
 			ft_get_time() - philo->data->start_time, philo->philo_number);
-	if (message == DROP_FORK)
-		printf("%lu\t%ld has droped a fork\n",
-			ft_get_time() - philo->data->start_time, philo->philo_number);
 	else if (message == EATING)
 		printf("%lu\t%ld is eating\n",
 			ft_get_time() - philo->data->start_time, philo->philo_number);
