@@ -11,47 +11,6 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
-/*
-void	ft_printf_data(t_data *data)
-{
-    t_philo	*current;
-    int		i;
-
-    if (!data)
-    {
-        printf("Data is NULL.\n");
-        return;
-    }
-	printf("Data Addres: %p\n", data);
-    printf("Total Philosophers: %ld\n", data->total_philos);
-    printf("Time to Die: %ld\n", data->time_to_die);
-    printf("Time to Eat: %ld\n", data->time_to_eat);
-    printf("Time to Sleep: %ld\n", data->time_to_sleep);
-    printf("Must Meals: %d\n", data->must_meals);
-	printf("Start time: %ld\n", data->start_time);
-    printf("Stop Routines: %s\n", data->stop_routines ? "true" : "false");
-
-    if (!data->philos)
-    {
-        printf("Philosophers list is NULL.\n");
-        return;
-    }
-
-    current = data->philos;
-    i = 0;
-    do
-    {
-		printf("\nPhilosopher %ld:\n", current->philo_number);
-		printf("  Philo addres: %p\n", (void *)current);
-        printf("  Total Meals: %d\n", current->meals);
-        printf("  Left Philosopher: %p\n", (void *)current->left_philo);
-        printf("  Right Philosopher: %p\n", (void *)current->right_philo);
-		printf("  Data address: %p\n", (void *)current->data);
-		printf("  Limit time: %ld\n", current->limit_time);
-        current = current->right_philo;
-        i++;
-    } while (current != data->philos && i < data->total_philos);
-}*/
 
 t_data	*ft_init_data(int argc, char **argv)
 {
@@ -128,16 +87,16 @@ int	ft_init_philos_data(t_data *data)
 int	ft_init_philos_routine(t_data *data)
 {
 	long	i;
+	t_philo	*philo;
 
 	i = 0;
-	t_philo	*philo_tmp;
-	philo_tmp = data->philos;
+	philo = data->philos;
 	while (i < data->total_philos)
 	{
-		philo_tmp->limit_time = ft_get_time() + philo_tmp->data->time_to_die;
-		if (pthread_create(&philo_tmp->thread, NULL, ft_routine, philo_tmp) != 0)
+		philo->limit_time = ft_get_time() + philo->data->time_to_die;
+		if (pthread_create(&philo->thread, NULL, ft_routine, philo) != 0)
 			return (ft_free_data(data), 1);
-		philo_tmp = philo_tmp->right_philo;
+		philo = philo->right_philo;
 		i++;
 		usleep(100);
 	}

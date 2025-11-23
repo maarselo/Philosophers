@@ -50,4 +50,3 @@ void	ft_linked_first_with_last_philo(t_philo *top_philo)
 	top_philo->left_philo = philo_tmp;
 	philo_tmp->right_philo = top_philo;
 }
-
