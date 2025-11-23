@@ -1,0 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routine.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvillavi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/17 11:38:58 by mvillavi          #+#    #+#             */
+/*   Updated: 2025/11/17 11:39:01 by mvillavi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philosophers.h"
+
+static int	ft_take_forks(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->fork);
+	if (!ft_should_continue(philo))
+		return (ft_unlock_fork(philo), 1);
+	ft_display_message(TAKEN_FORK, philo);
+	pthread_mutex_lock(&philo->left_philo->fork);
+	if (!ft_should_continue(philo))
+		return (ft_unlock_both_forks(philo), 1);
+	ft_display_message(TAKEN_FORK, philo);
+	return (0);
+}
+
+static void	ft_leave_forks(t_philo *philo)
+{
+	ft_display_message(DROP_FORK, philo);
+	pthread_mutex_unlock(&philo->fork);
+	ft_display_message(DROP_FORK, philo);
+	pthread_mutex_unlock(&philo->left_philo->fork);
+}
+
+static void	ft_eat(t_philo *philo)
+{
+	if (!ft_should_continue(philo) || ft_take_forks(philo))
+		return ;
+	philo->is_eating = true;
+	ft_display_message(EATING, philo);
+	philo->limit_time = ft_get_time() + philo->data->time_to_die;
+	usleep(philo->data->time_to_eat * 1000);
+	philo->is_eating = false;
+	if (philo->data->must_meals)
+		philo->meals++;
+	ft_leave_forks(philo);
+}
+
+static void	ft_sleep(t_philo *philo)
+{
+	if (!ft_should_continue(philo))
+		return ;
+	ft_display_message(SLEEPING, philo);
+	usleep(philo->data->time_to_sleep * 1000);
+}
+
+void	*ft_routine(void *philo_arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philo_arg;
+	while (ft_should_continue(philo))
+	{
+		ft_eat(philo);
+		ft_sleep(philo);
+		if (ft_should_continue(philo))
+			ft_display_message(THINKING, philo);
+	}
+	return (NULL);
+}
