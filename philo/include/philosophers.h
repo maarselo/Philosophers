@@ -32,7 +32,6 @@ typedef enum e_error
 typedef enum e_state
 {
 	TAKEN_FORK,
-	DROP_FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
@@ -45,13 +44,14 @@ typedef struct s_data	t_data;
 typedef struct s_philo
 {
 	long			philo_number;
-	pthread_t		thread;
 	pthread_mutex_t	fork;
-	struct s_philo	*left_philo;//prev
-	struct s_philo	*right_philo;//next
 	int				meals;
 	bool			is_eating;
 	unsigned long	limit_time;
+	pthread_mutex_t	philo_state_mutex;
+	pthread_t		thread;
+	struct s_philo	*left_philo;
+	struct s_philo	*right_philo;
 	t_data			*data;
 }	t_philo;
 
@@ -89,6 +89,7 @@ int				ft_init_philos_data(t_data *data);
 int				ft_init_philos_routine(t_data *data);
 
 //routine_utils.c
+int				ft_check_only_one(t_philo *philo);
 int				ft_should_continue(t_philo *philo);
 void			ft_unlock_fork(t_philo *philo);
 void			ft_unlock_both_forks(t_philo *philo);
