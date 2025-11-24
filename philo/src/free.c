@@ -41,7 +41,7 @@ void	ft_free_philos_list(t_philo *philo_list)
 	while (philo_free)
 	{
 		pthread_join(philo_free->thread, NULL);
-		philo_free = philo_free->right_philo; 
+		philo_free = philo_free->right_philo;
 	}
 	philo_free = philo_list;
 	while (philo_free)
