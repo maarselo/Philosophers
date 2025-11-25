@@ -64,6 +64,7 @@ void	ft_monitor(t_data *data)
 				data->stop_routines = true;
 				pthread_mutex_unlock(&data->stop_routine_mutex);
 				printf("All philosophers reached the must meals.\n");
+				//ussleep(100);
 				return ;
 			}
 		}
