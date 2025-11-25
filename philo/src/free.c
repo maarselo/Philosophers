@@ -23,6 +23,7 @@ static void	ft_free_one_thread(t_philo *philo)
 static void	ft_free_thread(t_philo *philo)
 {
 	pthread_mutex_destroy(&philo->fork);
+	pthread_mutex_destroy(&philo->philo_state_mutex);
 	philo->data = NULL;
 	free(philo);
 }
@@ -62,6 +63,7 @@ void	ft_free_data(t_data *data)
 		if (data->philos)
 			ft_free_philos_list(data->philos);
 		pthread_mutex_destroy(&data->write_mutex);
+		pthread_mutex_destroy(&data->stop_routine_mutex);
 		free(data);
 	}
 }
