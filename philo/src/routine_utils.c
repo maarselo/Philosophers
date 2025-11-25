@@ -44,11 +44,6 @@ void	ft_handler_one_philo(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->stop_routine_mutex);
 }
 
-void	ft_unlock_fork(t_philo *philo)
-{
-	pthread_mutex_unlock(&philo->fork);
-}
-
 void	ft_unlock_both_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->fork);

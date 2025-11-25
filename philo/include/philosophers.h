@@ -95,7 +95,6 @@ int				ft_init_philos_routine(t_data *data);
 int				ft_should_continue(t_philo *philo);
 int				ft_check_only_one(t_philo *philo);
 void			ft_handler_one_philo(t_philo *philo);
-void			ft_unlock_fork(t_philo *philo);
 void			ft_unlock_both_forks(t_philo *philo);
 //routine.c
 void			*ft_routine(void *philo_arg);
