@@ -42,8 +42,9 @@ static int	ft_check_anyone_is_die(t_data *data)
 		pthread_mutex_lock(&philo->philo_state_mutex);
 		if (!philo->is_eating && philo->limit_time < ft_get_time())
 		{
+			pthread_mutex_unlock(&philo->philo_state_mutex);
 			ft_display_message(DIE, philo);
-			return (pthread_mutex_unlock(&philo->philo_state_mutex), 1);
+			return (1);
 		}
 		pthread_mutex_unlock(&philo->philo_state_mutex);
 		philo = philo->right_philo;
