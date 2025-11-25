@@ -16,11 +16,22 @@ static int	ft_take_forks(t_philo *philo)
 {
 	if (ft_check_only_one(philo))
 		return (ft_handler_one_philo(philo), 1);
-	pthread_mutex_lock(&philo->fork);
-	if (!ft_should_continue(philo))
-		return (ft_unlock_fork(philo), 1);
-	ft_display_message(TAKEN_FORK, philo);
-	pthread_mutex_lock(&philo->left_philo->fork);
+	if (philo->philo_number % 2 != 0)
+	{
+		pthread_mutex_lock(&philo->fork);
+		if (!ft_should_continue(philo))
+			return (pthread_mutex_unlock(&philo->fork), 1);
+		ft_display_message(TAKEN_FORK, philo);
+		pthread_mutex_lock(&philo->left_philo->fork);
+	}
+	else if (philo->philo_number % 2 == 0)
+	{
+		pthread_mutex_lock(&philo->left_philo->fork);
+		if (!ft_should_continue(philo))
+			return (pthread_mutex_unlock(&philo->left_philo->fork), 1);
+		ft_display_message(TAKEN_FORK, philo);
+		pthread_mutex_lock(&philo->fork);
+	}
 	if (!ft_should_continue(philo))
 		return (ft_unlock_both_forks(philo), 1);
 	ft_display_message(TAKEN_FORK, philo);
@@ -29,8 +40,16 @@ static int	ft_take_forks(t_philo *philo)
 
 static void	ft_leave_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->fork);
-	pthread_mutex_unlock(&philo->left_philo->fork);
+	if (philo->philo_number % 2 != 0)
+	{
+		pthread_mutex_unlock(&philo->left_philo->fork);
+		pthread_mutex_unlock(&philo->fork);
+	}
+	else if (philo->philo_number % 2 == 0)
+	{		
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(&philo->left_philo->fork);
+	}
 }
 
 static void	ft_eat(t_philo *philo)
@@ -69,7 +88,10 @@ void	*ft_routine(void *philo_arg)
 		ft_eat(philo);
 		ft_sleep(philo);
 		if (!ft_check_only_one(philo) && ft_should_continue(philo))
+		{
 			ft_display_message(THINKING, philo);
+			usleep(200);
+		}
 	}
 	return (NULL);
 }
