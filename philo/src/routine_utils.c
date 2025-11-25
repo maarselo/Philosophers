@@ -33,6 +33,17 @@ int	ft_check_only_one(t_philo *philo)
 	return (0);
 }
 
+void	ft_handler_one_philo(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->fork);
+	ft_display_message(TAKEN_FORK, philo);
+	usleep(philo->data->time_to_die * 1000);
+	pthread_mutex_unlock(&philo->fork);
+	pthread_mutex_lock(&philo->data->stop_routine_mutex);
+	philo->data->stop_routines = true;
+	pthread_mutex_unlock(&philo->data->stop_routine_mutex);
+}
+
 void	ft_unlock_fork(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->fork);

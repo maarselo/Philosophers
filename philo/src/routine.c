@@ -14,16 +14,12 @@
 
 static int	ft_take_forks(t_philo *philo)
 {
+	if (ft_check_only_one(philo))
+		return (ft_handler_one_philo(philo), 1);
 	pthread_mutex_lock(&philo->fork);
 	if (!ft_should_continue(philo))
 		return (ft_unlock_fork(philo), 1);
 	ft_display_message(TAKEN_FORK, philo);
-	if (philo->data->total_philos == 1)
-	{
-		usleep(philo->data->time_to_die * 1000);
-		pthread_mutex_unlock(&philo->fork);
-		return (1);
-	}
 	pthread_mutex_lock(&philo->left_philo->fork);
 	if (!ft_should_continue(philo))
 		return (ft_unlock_both_forks(philo), 1);
