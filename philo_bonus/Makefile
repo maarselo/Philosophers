@@ -16,10 +16,10 @@ SRC_DIR=src
 OBJ_DIR=obj
 INCLUDE_DIR=include
 
-HEADER=$(INCLUDE_DIR)/philosophers.h
+HEADER=$(INCLUDE_DIR)/philosophers_bonus.h
 
-SRCS_FILES = main.c entry.c  \
-				message.c utils.c error.c
+SRCS_FILES = main_bonus.c entry_bonus.c  \
+			 	utils_bonus.c error_bonus.c
 
 SRC=$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))

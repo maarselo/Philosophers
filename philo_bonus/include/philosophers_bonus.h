@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philosophers_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvillavi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,24 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILOSOPHERS_BONUS_H
+# define PHILOSOPHERS_BONUS_H
 
 # include <stdbool.h>
 # include <sys/time.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-//# define ODD "odd"
-//# define EVEN "even"
+# define SUCCESS 0
+# define ERROR 1
 
 typedef enum e_error
 {
 	ARGUMENTS_NUMBER,
 	ARGS_NOT_NUMERIC,
 	NEGATIVE_NUMBERS,
-	CREATING_VARIABLES,
+	//CREATING_VARIABLES,
+	//CREATING_THREADS,
 }	t_error;
 
-typedef enum e_state
+
+/*typedef enum e_state
 {
 	TAKEN_FORK,
 	EATING,
@@ -35,18 +39,20 @@ typedef enum e_state
 	THINKING,
 	ALL_MEALS,
 	DIE,
-}	t_state;
+}	t_state;*/
 
 typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
 	long			philo_number;
+	//pthread_mutex_t	fork;
 	int				meals;
 	bool			is_eating;
 	unsigned long	limit_time;
 	//pthread_mutex_t	philo_state_mutex;
 	pid_t			pid;
+	pthread_t		thread;
 	struct s_philo	*left_philo;
 	struct s_philo	*right_philo;
 	t_data			*data;
@@ -62,7 +68,7 @@ typedef struct s_data
 	t_philo			*philos;
 	//pthread_mutex_t	write_mutex;
 	bool			stop_routines;
-	pthread_mutex_t	stop_routine_mutex;
+	//pthread_mutex_t	stop_routine_mutex;
 	unsigned long	start_time;
 }	t_data;
 
@@ -73,7 +79,7 @@ long			ft_atol(char *str);
 unsigned long	ft_get_time(void);
 
 //entry.c
-int				ft_valid_arguments(int argc, char **argv);
+void			ft_valid_arguments(int argc, char **argv);
 
 //parser_utils.c
 //parser.c
@@ -89,6 +95,6 @@ int				ft_valid_arguments(int argc, char **argv);
 //free.c
 
 //error.c
-int				ft_error_handler(int error);
+void			ft_error_handler(int error);
 
 #endif

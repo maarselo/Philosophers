@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   error_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvillavi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,17 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_bonus.h"
 
-int	ft_error_handler(int error)
+void	ft_error_handler(int error)
 {
 	if (error == ARGUMENTS_NUMBER)
-		return (printf("Invalid number of arguments.\n"), 1);
+		printf("Invalid number of arguments.\n");
 	else if (error == ARGS_NOT_NUMERIC)
-		return (printf("Args can only be a digits.\n"), 1);
+		printf("Args can only be a digits.\n");
 	else if (error == NEGATIVE_NUMBERS)
-		return (printf("The args must be apositive numbers.\n"), 1);
-	else if (error == CREATING_VARIABLES)
-		return (printf("Error while creating variables.\n"), 1);
-	return (0);
+		printf("The args must be apositive numbers.\n");
+	//else if (error == CREATING_VARIABLES)
+	//	return (printf("Error while creating variables.\n"), 1);
+	//else if (error == CREATING_THREADS)
+	//	return (printf("Error while creating variables.\n"), 1);
+	exit(ERROR);
 }

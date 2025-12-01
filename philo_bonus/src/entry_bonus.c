@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entry.c                                            :+:      :+:    :+:   */
+/*   entry_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvillavi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_bonus.h"
 
 static int	ft_check_is_numeric(int argc, char **argv)
 {
@@ -47,13 +47,12 @@ static int	ft_check_positive_numbers(int argc, char **argv)
 	return (0);
 }
 
-int	ft_valid_arguments(int argc, char **argv)
+void	ft_valid_arguments(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
-		return (ft_error_handler(ARGUMENTS_NUMBER));
+		ft_error_handler(ARGUMENTS_NUMBER);
 	else if (ft_check_is_numeric(argc, argv))
-		return (ft_error_handler(ARGS_NOT_NUMERIC));
+		ft_error_handler(ARGS_NOT_NUMERIC);
 	else if (ft_check_positive_numbers(argc, argv))
-		return (ft_error_handler(NEGATIVE_NUMBERS));
-	return (0);
+		ft_error_handler(NEGATIVE_NUMBERS);
 }
