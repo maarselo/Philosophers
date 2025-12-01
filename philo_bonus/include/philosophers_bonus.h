@@ -17,6 +17,9 @@
 # include <sys/time.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <sys/wait.h>
+# include <semaphore.h>
+# include <pthread.h>
 
 # define SUCCESS 0
 # define ERROR 1
@@ -46,11 +49,10 @@ typedef struct s_data	t_data;
 typedef struct s_philo
 {
 	long			philo_number;
-	//pthread_mutex_t	fork;
-	int				meals;
 	bool			is_eating;
 	unsigned long	limit_time;
-	//pthread_mutex_t	philo_state_mutex;
+	int				meals;
+	sem_t			*state_sem;
 	pid_t			pid;
 	pthread_t		thread;
 	struct s_philo	*left_philo;
@@ -66,9 +68,7 @@ typedef struct s_data
 	long			time_to_sleep;
 	int				must_meals;
 	t_philo			*philos;
-	//pthread_mutex_t	write_mutex;
-	bool			stop_routines;
-	//pthread_mutex_t	stop_routine_mutex;
+	sem_t			*forks;
 	unsigned long	start_time;
 }	t_data;
 
