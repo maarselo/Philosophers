@@ -24,7 +24,7 @@ SRCS_FILES = main_bonus.c entry_bonus.c  \
 SRC=$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
 
-CC = cc
+CC = cc -lpthread -lrt
 CFLAGS = -Wall -Werror -Wextra -I$(INCLUDE_DIR) 
 DEBUG_FLAGS = -g -fsanitize=thread
 
