@@ -101,7 +101,6 @@ int	ft_init_philos_routine(t_data *data)
 			return (ft_free_data(data), 1);
 		philo = philo->right_philo;
 		i++;
-		usleep(100);
 	}
 	return (0);
 }
