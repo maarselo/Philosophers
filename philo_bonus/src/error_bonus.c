@@ -20,8 +20,8 @@ void	ft_error_handler(int error)
 		printf("Args can only be a digits.\n");
 	else if (error == NEGATIVE_NUMBERS)
 		printf("The args must be apositive numbers.\n");
-	//else if (error == CREATING_VARIABLES)
-	//	return (printf("Error while creating variables.\n"), 1);
+	else if (error == CREATING_VARIABLES)
+		printf("Error while creating variables.\n");
 	//else if (error == CREATING_THREADS)
 	//	return (printf("Error while creating variables.\n"), 1);
 	exit(ERROR);

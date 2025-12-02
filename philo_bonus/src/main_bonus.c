@@ -14,16 +14,16 @@
 
 int	main(int argc, char **argv)
 {
-	//t_data	*data;
+	t_data	*data;
 
 	ft_valid_arguments(argc, argv);
+	data = ft_init_data(argc, argv);
+	if (!data)
+		ft_error_handler(CREATING_VARIABLES);
+	ft_printf_data(data);
+	ft_free_data(data);
 
-
-	//data = ft_init_data(argc, argv);
-	//if (!data || ft_init_philos_data(data))
-	//	return (ft_error_handler(CREATING_VARIABLES));
 	//if (ft_init_philos_routine(data))
 	//	return (ft_error_handler(CREATING_THREADS));
 	//ft_monitor(data);
-	//ft_free_data(data);
 }

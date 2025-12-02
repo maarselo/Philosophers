@@ -22,6 +22,35 @@ int	ft_isspace(char c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
+long	ft_length_count(void *arg, int type)
+{
+	long		index;
+	char		*str;
+	long		number;
+	long		total_digits;
+
+	index = 0;
+	if (type == STR)
+	{
+		str = (char *)arg;
+		while (str[index])
+			index++;
+		return (index);
+	}
+	total_digits = 0;
+	if (type == NB)
+	{
+		number = *(long *)arg;
+		while (number > 0)
+		{
+			total_digits++;
+			number /= 10;
+		}
+		return (total_digits);
+	}
+	return (0);
+}
+
 long	ft_atol(char *str)
 {
 	int		index;
