@@ -51,30 +51,30 @@ typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
-	long			philo_number;//
-	bool			is_eating;//
-	int				meals;//
-	unsigned long	limit_time;
+	long			philo_number;
+	bool			is_eating;
+	int				meals;
+	unsigned long	limit_time;//
 	char			*sem_name;
 	sem_t			*sem_state;//
-	pid_t			pid;
-	pthread_t		*thread;//////
-	struct s_philo	*left_philo;//////
-	struct s_philo	*right_philo;/////
-	t_data			*data;//
+	pid_t			pid;//
+	pthread_t		*thread;//
+	struct s_philo	*left_philo;
+	struct s_philo	*right_philo;
+	t_data			*data;
 }	t_philo;
 
 typedef struct s_data
 {
-	long			total_philos;//
-	long			time_to_die;//
-	long			time_to_eat;//
-	long			time_to_sleep;//
-	int				must_meals;//
-	t_philo			*philos;//
-	sem_t			*forks;//
-	sem_t			*writer;//
-	unsigned long	start_time;//
+	long			total_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				must_meals;
+	t_philo			*philos;
+	sem_t			*forks;
+	sem_t			*writer;
+	unsigned long	start_time;
 }	t_data;
 
 //utils.c
