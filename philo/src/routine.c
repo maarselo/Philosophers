@@ -72,7 +72,7 @@ static void	ft_eat(t_philo *philo)
 
 static void	ft_sleep(t_philo *philo)
 {
-	if (!ft_should_continue(philo) || ft_check_only_one(philo))
+	if (!ft_should_continue(philo))
 		return ;
 	ft_display_message(SLEEPING, philo);
 	usleep(philo->data->time_to_sleep * 1000);
@@ -87,7 +87,7 @@ void	*ft_routine(void *philo_arg)
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
-		if (!ft_check_only_one(philo) && ft_should_continue(philo))
+		if (ft_should_continue(philo))
 		{
 			ft_display_message(THINKING, philo);
 			usleep(200);
