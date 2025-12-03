@@ -20,10 +20,13 @@ int	main(int argc, char **argv)
 	data = ft_init_data(argc, argv);
 	if (!data)
 		ft_error_handler(CREATING_VARIABLES);
-	ft_printf_data(data);
+	ft_init_philos_data(data);
+	if (ft_init_philos_processes(data))
+	{
+		ft_kill_all_processes(-1, data);
+		ft_error_handler(CREATING_PROCESSES);
+	}
+	ft_main_monitor(data);
 	ft_free_data(data);
-
-	//if (ft_init_philos_routine(data))
-	//	return (ft_error_handler(CREATING_THREADS));
-	//ft_monitor(data);
+	return (SUCCESS);
 }
