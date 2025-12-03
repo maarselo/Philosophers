@@ -90,7 +90,7 @@ void	*ft_routine(void *philo_arg)
 		if (ft_should_continue(philo))
 		{
 			ft_display_message(THINKING, philo);
-			usleep(200);
+			usleep(500);
 		}
 	}
 	return (NULL);
