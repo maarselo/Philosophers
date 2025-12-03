@@ -48,7 +48,8 @@
         printf("  Total Meals: %d\n", current->meals);
         printf("  Limit time: %lu\n", data->start_time + data->time_to_die);
     	printf("  Sem state %s\n", current->sem_state ? "true": "false");
-    	printf("  Sem name %s\n", current->sem_name);
+    	printf("  Sem state name %s\n", current->name_sem_state);
+    	printf("  Sem stop routine name %s\n", current->name_sem_stop_routine);
 		printf("  Thread: %s\n", current->thread ? "creado" : "null");
         printf("  Left Philosopher: %p\n", (void *)current->left_philo);
         printf("  Right Philosopher: %p\n", (void *)current->right_philo);
@@ -99,11 +100,16 @@ static t_philo	*ft_init_philo(long philo_number, t_data *data)
 		philo->meals = 0;
 	else
 		philo->meals = -1;
-	philo->sem_name = ft_get_semname(philo_number);
-	if (!philo->sem_name)
+	philo->name_sem_state = ft_get_name_sem_state(philo_number);
+	if (!philo->name_sem_state)
 		return (free(philo), NULL);
 	philo->sem_state = NULL;
-	philo->thread = NULL;
+	philo->situation = ALIVE;
+	philo->name_sem_situation = ft_get_name_sem_situation(philo_number);
+	if (!philo->name_sem_situation)
+		return (free(philo->name_sem_state), free(philo), NULL);
+	philo->sem_situation = NULL;
+	philo->pid = -1;
 	philo->left_philo = NULL;
 	philo->right_philo = NULL;
 	philo->data = data;
@@ -137,4 +143,42 @@ void	ft_init_philos_data(t_data *data)
 	}
 	ft_linked_first_with_last_philo(philo_top);
 	data->philos = philo_top;
+}
+
+static void	ft_init_philo_routine(t_philo *philo)
+{
+	sem_unlink(philo->name_sem_state);
+	philo->sem_state = sem_open(philo->name_sem_state, O_CREAT, 0644, 1);
+	if (philo->sem_state == SEM_FAILED)
+		ft_finish_philosopher(philo, ERROR);
+	sem_unlink(philo->name_sem_situation);
+	philo->sem_situation = sem_open(philo->name_sem_situation, O_CREAT, 0644, 1);
+	if (philo->sem_situation == SEM_FAILED)
+		ft_finish_philosopher(philo, ERROR);
+	philo->limit_time = ft_get_time() + philo->data->time_to_die;
+	if (pthread_create(&philo->thread, NULL, ft_process_monitor, philo) != 0)
+	{
+		ft_error_handler(CREATING_THREADS);
+		ft_finish_philosopher(philo, ERROR);
+	}
+	ft_routine(philo);
+}
+
+int	ft_init_philos_processes(t_data *data)
+{
+	int		i;
+	t_philo	*philo_tmp;
+
+	i = 1;
+	philo_tmp = data->philos;
+	while (i++ <= data->total_philos)
+	{
+		philo_tmp->pid = fork();
+		if (philo_tmp->pid == -1)
+			return (ERROR);
+		else if (philo_tmp->pid == 0)
+			ft_init_philo_routine(philo_tmp);
+		philo_tmp = philo_tmp->right_philo;
+	}
+	return (SUCCESS);
 }
