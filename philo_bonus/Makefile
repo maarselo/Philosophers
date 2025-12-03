@@ -20,7 +20,9 @@ HEADER=$(INCLUDE_DIR)/philosophers_bonus.h
 
 SRCS_FILES = main_bonus.c entry_bonus.c  			     \
 				parser_bonus.c parser_utils_bonus.c      \
-			 	utils_bonus.c free_bonus.c error_bonus.c
+				monitor.c terminator.c \
+			 	message.c utils_bonus.c  \
+				free_bonus.c error_handler_bonus.c
 
 SRC=$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
