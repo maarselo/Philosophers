@@ -12,7 +12,7 @@
 
 #include "philosophers_bonus.h"
 
-char	*ft_get_semname(long philo_number)
+char	*ft_get_name_sem_state(long philo_number)
 {
 	long	i;
 	int		total_digits;
@@ -23,6 +23,33 @@ char	*ft_get_semname(long philo_number)
 	i = philo_number;
 	total_digits = ft_length_count((void *)&philo_number, NB);
 	philo_str = "/philo";
+	semname = malloc(ft_length_count(philo_str, STR) + total_digits + 1);
+	if (!semname)
+		return (NULL);
+	i = -1;
+	while (++i < ft_length_count(philo_str, STR))
+		semname[i] = philo_str[i];
+	i = ft_length_count(philo_str, STR) + total_digits - 1;
+	while (philo_number > 0)
+	{
+		semname[i--] = '0' + (philo_number % 10);
+		philo_number /= 10;
+	}
+	semname[i + total_digits + 1] = '\0';
+	return (semname);
+}
+
+char	*ft_get_name_sem_situation(long philo_number)
+{
+	long	i;
+	int		total_digits;
+	char	*philo_str;
+	char	*semname;
+
+	total_digits = 0;
+	i = philo_number;
+	total_digits = ft_length_count((void *)&philo_number, NB);
+	philo_str = "/situation";
 	semname = malloc(ft_length_count(philo_str, STR) + total_digits + 1);
 	if (!semname)
 		return (NULL);
