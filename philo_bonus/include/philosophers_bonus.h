@@ -20,7 +20,9 @@
 # include <sys/wait.h>
 # include <semaphore.h>
 # include <fcntl.h>
+# include <unistd.h>
 # include <pthread.h>
+# include <signal.h>
 
 # define SUCCESS 0
 # define ERROR 1
@@ -34,10 +36,18 @@ typedef enum e_error
 	ARGS_NOT_NUMERIC,
 	NEGATIVE_NUMBERS,
 	CREATING_VARIABLES,
-	//CREATING_THREADS,
+	CREATING_PROCESSES,
+	CREATING_THREADS,
 }	t_error;
 
-/*typedef enum e_state
+typedef enum e_state
+{
+	ALIVE,
+	DIED,
+	FINISHED_MEALS,
+}	t_state;
+
+typedef enum e_action
 {
 	TAKEN_FORK,
 	EATING,
@@ -45,7 +55,7 @@ typedef enum e_error
 	THINKING,
 	ALL_MEALS,
 	DIE,
-}	t_state;*/
+}	t_action;
 
 typedef struct s_data	t_data;
 
@@ -54,11 +64,14 @@ typedef struct s_philo
 	long			philo_number;
 	bool			is_eating;
 	int				meals;
-	unsigned long	limit_time;//
-	char			*sem_name;
-	sem_t			*sem_state;//
-	pid_t			pid;//
-	pthread_t		*thread;//
+	unsigned long	limit_time;
+	char			*name_sem_state;
+	sem_t			*sem_state;
+	unsigned short	situation;
+	char			*name_sem_situation;
+	sem_t			*sem_situation;
+	pid_t			pid;
+	pthread_t		thread;
 	struct s_philo	*left_philo;
 	struct s_philo	*right_philo;
 	t_data			*data;
@@ -88,7 +101,8 @@ unsigned long	ft_get_time(void);
 void			ft_valid_arguments(int argc, char **argv);
 
 //parser_utils.c
-char			*ft_get_semname(long philo_number);
+char			*ft_get_name_sem_state(long philo_number);
+char			*ft_get_name_sem_situation(long philo_number);
 void			ft_append_philo(t_philo *philo_created, t_philo *philo_list);
 void			ft_link_previous_philo(t_philo *philo_created,
 					t_philo *philo_list);
@@ -96,15 +110,26 @@ void			ft_linked_first_with_last_philo(t_philo *top_philo);
 //parser.c
 t_data			*ft_init_data(int argc, char **argv);
 void			ft_init_philos_data(t_data *data);
+int				ft_init_philos_processes(t_data *data);
+
 //routine_utils.c
+bool			ft_check_only_one(t_philo *philo);
+bool			ft_check_should_continue(t_philo *philo);
 //routine.c
-
+void			ft_routine(t_philo *philo);
 //monitor.c
+void			*ft_process_monitor(void *philo_arg);
+void			ft_main_monitor(t_data *data);
 
-//message.c
-//void			ft_display_message(int message, t_philo *philo);
+//terminator.c
+void			ft_finish_philosopher(t_philo *philo, int exit_code);
+void			ft_kill_all_processes(pid_t pid_die, t_data *data);
+
+//message
+void			ft_display_message(int message, t_philo *philo);
 
 //free.c
+void			ft_free_philo(t_philo *philo);
 void			ft_free_philo_list(t_philo *philo_list);
 void			ft_free_data(t_data *data);
 
