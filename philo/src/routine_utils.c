@@ -15,9 +15,7 @@
 int	ft_should_continue(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->stop_routine_mutex);
-	if (philo->data->stop_routines
-		|| (philo->data->must_meals
-			&& philo->data->must_meals <= philo->meals))
+	if (philo->data->stop_routines)
 	{
 		pthread_mutex_unlock(&philo->data->stop_routine_mutex);
 		return (0);
