@@ -152,7 +152,8 @@ static void	ft_init_philo_routine(t_philo *philo)
 	if (philo->sem_state == SEM_FAILED)
 		ft_finish_philosopher(philo, ERROR);
 	sem_unlink(philo->name_sem_situation);
-	philo->sem_situation = sem_open(philo->name_sem_situation, O_CREAT, 0644, 1);
+	philo->sem_situation = sem_open(philo->name_sem_situation,
+			O_CREAT, 0644, 1);
 	if (philo->sem_situation == SEM_FAILED)
 		ft_finish_philosopher(philo, ERROR);
 	philo->limit_time = ft_get_time() + philo->data->time_to_die;
