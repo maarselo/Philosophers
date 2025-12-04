@@ -42,6 +42,21 @@ void	ft_handler_one_philo(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->stop_routine_mutex);
 }
 
+void	ft_precise_sleep(long time_in_milliseconds, t_philo *philo)
+{
+	long	start;
+	long	current;
+
+	start = ft_get_time();
+	while (ft_should_continue(philo))
+	{
+		current = ft_get_time();
+		if (current - start >= time_in_milliseconds)
+			break;
+		usleep(500);
+	}
+}
+
 void	ft_unlock_both_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->fork);
