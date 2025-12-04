@@ -87,7 +87,8 @@ void	*ft_routine(void *philo_arg)
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
-		ft_display_message(THINKING, philo);
+		if (ft_should_continue(philo))
+			ft_display_message(THINKING, philo);
 	}
 	return (NULL);
 }
