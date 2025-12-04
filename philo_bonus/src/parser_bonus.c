@@ -12,53 +12,6 @@
 
 #include "philosophers_bonus.h"
 
-/*void	ft_printf_data(t_data *data)
-{
-    t_philo	*current;
-    int		i;
-
-    if (!data)
-    {
-        printf("Data is NULL.\n");
-        return;
-    }
-
-	printf("Data Addres: %p\n", data);
-    printf("Total Philosophers: %ld\n", data->total_philos);
-    printf("Time to Die: %ld\n", data->time_to_die);
-    printf("Time to Eat: %ld\n", data->time_to_eat);
-    printf("Time to Sleep: %ld\n", data->time_to_sleep);
-    printf("Must Meals: %d\n", data->must_meals);
-    printf("Sem forks: %s\n", data->forks ? "true" : "false");
-    printf("Sem writer: %s\n", data->writer ? "true" : "false");
-    printf("Init time: %ld\n", ft_get_time());
-
-    if (!data->philos)
-    {
-        printf("Philosophers list is NULL.\n");
-        return;
-    }
-    current = data->philos;
-    i = 0;
-    do
-    {
-		printf("\nPhilosopher %ld:\n", current->philo_number);
-		printf("  Philo addres: %p\n", (void *)current);
-    	printf("  Is eating: %s\n", current->is_eating ? "true" : "false");
-        printf("  Total Meals: %d\n", current->meals);
-        printf("  Limit time: %lu\n", data->start_time + data->time_to_die);
-    	printf("  Sem state %s\n", current->sem_state ? "true": "false");
-    	printf("  Sem state name %s\n", current->name_sem_state);
-    	printf("  Sem stop routine name %s\n", current->name_sem_stop_routine);
-		printf("  Thread: %s\n", current->thread ? "creado" : "null");
-        printf("  Left Philosopher: %p\n", (void *)current->left_philo);
-        printf("  Right Philosopher: %p\n", (void *)current->right_philo);
-		printf(" Data address: %p\n", (void *)current->data);
-        current = current->right_philo;
-        i++;
-    } while (current != data->philos && i < data->total_philos);
-}*/
-
 t_data	*ft_init_data(int argc, char **argv)
 {
 	t_data	*data;
@@ -157,10 +110,14 @@ static void	ft_init_philo_routine(t_philo *philo)
 	if (philo->sem_situation == SEM_FAILED)
 		ft_finish_philosopher(philo, ERROR);
 	philo->limit_time = ft_get_time() + philo->data->time_to_die;
-	if (pthread_create(&philo->thread, NULL, ft_process_monitor, philo) != 0)
+	if (philo->data->total_philos > 1)
 	{
-		ft_error_handler(CREATING_THREADS);
-		ft_finish_philosopher(philo, ERROR);
+		if (pthread_create(&philo->thread, NULL,
+				ft_process_monitor, philo) != 0)
+		{
+			ft_error_handler(CREATING_THREADS);
+			ft_finish_philosopher(philo, ERROR);
+		}
 	}
 	ft_routine(philo);
 }

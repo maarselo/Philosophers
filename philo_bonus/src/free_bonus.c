@@ -12,21 +12,12 @@
 
 #include "philosophers_bonus.h"
 
-/*void	ft_exit_die_philo(t_philo *philo)
+void	ft_free_philo(t_philo *philo)
 {
-	sem_close(philo->sem_state);
-	sem_unlink(philo->sem_name);
-	free(philo->sem_name);
-	pthread_join(philo->thread, NULL);
-	philo->left_philo = NULL;
-	philo->right_philo = NULL;
-	philo->data = NULL;
-	free(philo);
-}*/
-
-static void	ft_free_philo(t_philo *philo)
-{
-	free(philo->sem_name);
+	if (philo->name_sem_state)
+		free(philo->name_sem_state);
+	if (philo->name_sem_situation)
+		free(philo->name_sem_situation);
 	philo->left_philo = NULL;
 	philo->right_philo = NULL;
 	philo->data = NULL;
@@ -50,12 +41,12 @@ void	ft_free_philo_list(t_philo *philo_list)
 
 void	ft_free_data(t_data *data)
 {
-	if (data->forks != SEM_FAILED)
+	if (data->forks && data->forks != SEM_FAILED)
 	{
 		sem_close(data->forks);
 		sem_unlink("/forks");
 	}
-	if (data->writer != SEM_FAILED)
+	if (data->writer && data->writer != SEM_FAILED)
 	{
 		sem_close(data->writer);
 		sem_unlink("/writer");

@@ -18,11 +18,11 @@ INCLUDE_DIR=include
 
 HEADER=$(INCLUDE_DIR)/philosophers_bonus.h
 
-SRCS_FILES = main_bonus.c entry_bonus.c  			     \
-				parser_bonus.c parser_utils_bonus.c      \
-				routine_bonus.c monitor_bonus.c          \
-				terminator_bonus.c \
-			 	message_bonus.c utils_bonus.c  \
+SRCS_FILES = main_bonus.c entry_bonus.c  			   \
+				parser_bonus.c parser_utils_bonus.c    \
+				routine_bonus.c routine_utils_bonus.c  \
+				monitor_bonus.c terminator_bonus.c     \
+			 	message_bonus.c utils_bonus.c          \
 				free_bonus.c error_handler_bonus.c
 
 SRC=$(addprefix $(SRC_DIR)/, $(SRCS_FILES))

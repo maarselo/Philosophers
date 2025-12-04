@@ -27,7 +27,8 @@ void	ft_finish_philosopher(t_philo *philo, int exit_code)
 		sem_close(philo->sem_situation);
 		sem_unlink(philo->name_sem_situation);
 	}
-	pthread_join(philo->thread, NULL);
+	if (philo->data->total_philos > 1)
+		pthread_join(philo->thread, NULL);
 	if (philo->data->total_philos == 1)
 		ft_free_philo(philo);
 	else
@@ -54,6 +55,13 @@ void	ft_kill_all_processes(pid_t pid_die, t_data *data)
 			continue ;
 		}
 		kill(philo_tmp->pid, SIGKILL);
+		philo_tmp = philo_tmp->right_philo;
+	}
+	philo_tmp = data->philos;
+	i = 1;
+	while (i++ <= data->total_philos)
+	{
+		waitpid(philo_tmp->pid, NULL, 0);
 		philo_tmp = philo_tmp->right_philo;
 	}
 }

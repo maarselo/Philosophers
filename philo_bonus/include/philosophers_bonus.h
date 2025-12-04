@@ -113,10 +113,13 @@ void			ft_init_philos_data(t_data *data);
 int				ft_init_philos_processes(t_data *data);
 
 //routine_utils.c
-bool			ft_check_only_one(t_philo *philo);
+bool			ft_check_only_one(t_data *data);
+void			ft_handler_one_philo(t_philo *philo);
 bool			ft_check_should_continue(t_philo *philo);
+int				ft_get_exit_code(t_philo *philo);
 //routine.c
 void			ft_routine(t_philo *philo);
+
 //monitor.c
 void			*ft_process_monitor(void *philo_arg);
 void			ft_main_monitor(t_data *data);

@@ -12,6 +12,9 @@
 
 #include "philosophers_bonus.h"
 
+//maybe i needd to unlink if its die, to destroy the semaphore
+//and check int the writer
+
 void	ft_display_message(int message, t_philo *philo)
 {
 	sem_wait(philo->data->writer);
