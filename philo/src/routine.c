@@ -46,7 +46,7 @@ static void	ft_leave_forks(t_philo *philo)
 		pthread_mutex_unlock(&philo->fork);
 	}
 	else if (philo->philo_number % 2 == 0)
-	{		
+	{
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->left_philo->fork);
 	}

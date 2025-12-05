@@ -52,7 +52,7 @@ void	ft_precise_sleep(long time_in_milliseconds, t_philo *philo)
 	{
 		current = ft_get_time();
 		if (current - start >= time_in_milliseconds)
-			break;
+			break ;
 		usleep(500);
 	}
 }
