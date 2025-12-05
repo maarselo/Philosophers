@@ -42,6 +42,20 @@ bool	ft_check_should_continue(t_philo *philo)
 	return (true);
 }
 
+void	ft_precise_sleep(long milliseconds, t_philo *philo)
+{
+	long	start_time;
+	long	current;
+
+	start_time = ft_get_time();
+	while (ft_check_should_continue(philo))
+	{
+		current = ft_get_time();
+		if (current - start_time >= milliseconds)
+			break ;
+		usleep(500);
+	}	
+}
 int	ft_get_exit_code(t_philo *philo)
 {
 	int	exit_code;

@@ -42,7 +42,7 @@ void	ft_eat(t_philo *philo)
 	philo->limit_time = ft_get_time() + philo->data->time_to_die;
 	sem_post(philo->sem_state);
 	ft_display_message(EATING, philo);
-	usleep(philo->data->time_to_eat * 1000);
+	ft_precise_sleep(philo->data->time_to_eat, philo);
 	sem_wait(philo->sem_state);
 	philo->is_eating = false;
 	if (philo->data->must_meals)
@@ -56,7 +56,7 @@ static void	ft_sleep(t_philo *philo)
 	if (!ft_check_should_continue(philo))
 		return ;
 	ft_display_message(SLEEPING, philo);
-	usleep(philo->data->time_to_sleep * 1000);
+	ft_precise_sleep(philo->data->time_to_sleep, philo);
 }
 
 void	ft_routine(t_philo *philo)
@@ -72,7 +72,7 @@ void	ft_routine(t_philo *philo)
 		if (ft_check_should_continue(philo))
 		{
 			ft_display_message(THINKING, philo);
-			usleep(200);
+			//usleep(200);
 		}
 	}
 	exit_code = ft_get_exit_code(philo);
