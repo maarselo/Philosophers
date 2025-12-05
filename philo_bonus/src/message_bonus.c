@@ -12,9 +12,6 @@
 
 #include "philosophers_bonus.h"
 
-//maybe i needd to unlink if its die, to destroy the semaphore
-//and check int the writer
-
 void	ft_display_message(int message, t_philo *philo)
 {
 	sem_wait(philo->data->writer);
@@ -34,7 +31,10 @@ void	ft_display_message(int message, t_philo *philo)
 		printf("%lu\t%ld reached the total number of meals\n",
 			ft_get_time() - philo->data->start_time, philo->philo_number);
 	else if (message == DIE)
+	{
 		printf("%lu\t%ld died\n",
 			ft_get_time() - philo->data->start_time, philo->philo_number);
+		return ;
+	}
 	sem_post(philo->data->writer);
 }
