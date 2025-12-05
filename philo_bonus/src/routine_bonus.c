@@ -70,10 +70,7 @@ void	ft_routine(t_philo *philo)
 		ft_eat(philo);
 		ft_sleep(philo);
 		if (ft_check_should_continue(philo))
-		{
 			ft_display_message(THINKING, philo);
-			//usleep(200);
-		}
 	}
 	exit_code = ft_get_exit_code(philo);
 	ft_finish_philosopher(philo, exit_code);

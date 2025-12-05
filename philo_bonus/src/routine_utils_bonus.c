@@ -54,8 +54,9 @@ void	ft_precise_sleep(long milliseconds, t_philo *philo)
 		if (current - start_time >= milliseconds)
 			break ;
 		usleep(500);
-	}	
+	}
 }
+
 int	ft_get_exit_code(t_philo *philo)
 {
 	int	exit_code;
