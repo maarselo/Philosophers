@@ -45,11 +45,11 @@ BULLET_RED = $(RED)•$(RESET)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(HEADER) Makefile
+$(NAME): $(OBJS)
 	@$(CC) $(OBJS)  -o $(NAME)
 	@echo "$(GREEN)Compilation completed!$(RESET)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile $(HEADER) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(YELLOW)▶ Compiling $(RESET) $<..."
 
