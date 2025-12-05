@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	ft_init_philos_data(data);
 	if (ft_init_philos_processes(data))
 	{
-		ft_kill_all_processes(-1, data);
+		ft_kill_all_processes(data);
 		ft_error_handler(CREATING_PROCESSES);
 	}
 	ft_main_monitor(data);

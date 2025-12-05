@@ -116,6 +116,7 @@ int				ft_init_philos_processes(t_data *data);
 bool			ft_check_only_one(t_data *data);
 void			ft_handler_one_philo(t_philo *philo);
 bool			ft_check_should_continue(t_philo *philo);
+void			ft_precise_sleep(long milliseconds, t_philo *philo);
 int				ft_get_exit_code(t_philo *philo);
 //routine.c
 void			ft_routine(t_philo *philo);
@@ -126,7 +127,7 @@ void			ft_main_monitor(t_data *data);
 
 //terminator.c
 void			ft_finish_philosopher(t_philo *philo, int exit_code);
-void			ft_kill_all_processes(pid_t pid_die, t_data *data);
+void			ft_kill_all_processes(t_data *data);
 
 //message
 void			ft_display_message(int message, t_philo *philo);
