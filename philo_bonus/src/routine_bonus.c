@@ -65,6 +65,8 @@ void	ft_routine(t_philo *philo)
 
 	if (ft_check_only_one(philo->data))
 		return (ft_handler_one_philo(philo));
+	if (philo->philo_number % 2 == 0)
+		usleep(200);
 	while (ft_check_should_continue(philo))
 	{
 		ft_eat(philo);
